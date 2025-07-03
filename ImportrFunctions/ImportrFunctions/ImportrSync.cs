@@ -1,6 +1,8 @@
 using System;
+using System.Configuration;
 using ImportrFunctions.Services;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace ImportrFunctions;
@@ -11,13 +13,15 @@ public class ImportrSync
   FetchService fetchService;
   TokenService tokenService;
   CourseService courseService;
+  IConfiguration config; 
 
-  public ImportrSync(ILoggerFactory loggerFactory, FetchService fetchService, TokenService tokenService, CourseService courseService)
+  public ImportrSync(ILoggerFactory loggerFactory, IConfiguration config,FetchService fetchService, TokenService tokenService, CourseService courseService)
   {
     _logger = loggerFactory.CreateLogger<ImportrSync>();
     this.fetchService = fetchService;
     this.tokenService = tokenService;
     this.courseService = courseService;
+    this.config = config;
   }
   //url: /admin/functions/synccourses
   [Function("SyncCourses")]
@@ -41,11 +45,37 @@ public class ImportrSync
     var i = await courseService.GetAllCoursesCountAsync();
     _logger.LogInformation($"Courses count: {i}");
     //Register Location
+    (int added, int updated, int failed) locationResult = await RegisterLocationAsync();
+    _logger.LogInformation($"locations new: {locationResult.added}, updated: {locationResult.updated}, failed : {locationResult.failed}");
     //Register Courses
+
 
     if (myTimer.ScheduleStatus is not null)
     {
       _logger.LogInformation("Next timer schedule at: {nextSchedule}", myTimer.ScheduleStatus.Next);
     }
+  }
+
+  private async Task<(int added, int updated, int failed)> RegisterLocationAsync()
+  {
+    var dryRun = bool.Parse(config["dryRun"]);
+    var courseProviderId = config["courseProviderId"];
+    var locationResult = await courseService.RegisterLocation(new()
+    {
+      dryRun = dryRun,
+      detailedResults = false,
+      entities = [
+          new () {
+            title = "U2U",
+            postalCode = "1731",
+            city = "Zellik (Brussels)",
+            address = "Z.1. ResearchPark 110",
+            courseProviderId = courseProviderId,
+            locationId="U2U",
+            countryIsoCode = "BE"
+          }
+          ]
+    });
+    return locationResult;
   }
 }

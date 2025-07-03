@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ImportrFunctions.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,16 @@ namespace ImportrFunctions.Services
       }
       ;
       return 0;
+    }
+
+    public async Task<(int added,int updated,int failed)> RegisterLocation(ImportingCourseProviderLocationImportingBundle locationInfo)
+    {
+      var sLocation = JsonSerializer.Serialize(locationInfo);
+      StringContent body = new StringContent(sLocation, Encoding.UTF8, "application/json");
+      var resp = await client.PostAsync("/importrapi/v1/importingProviderLocation/importbundle", body);
+      var sInfo = await resp.Content.ReadAsStringAsync();
+      var info = JsonSerializer.Deserialize<ImportingEntityImportingEntityResult>(sInfo);
+      return (info.countAdded,info.countUpdated,info.countFailed);
     }
 
   }
