@@ -43,5 +43,15 @@ namespace ImportrFunctions.Services
       return (info.countAdded,info.countUpdated,info.countFailed);
     }
 
+    public async Task<ImportingEntityImportingEntityResult> RegisterCoursesAsync(BOBECourseImport courseInfo)
+    {
+      var sCourses = JsonSerializer.Serialize(courseInfo);
+      StringContent body = new StringContent(sCourses, Encoding.UTF8, "application/json");
+      var resp = await client.PostAsync(config["CourseImportUrl"], body);
+      var sInfo = await resp.Content.ReadAsStringAsync();
+      var info = JsonSerializer.Deserialize<ImportingEntityImportingEntityResult>(sInfo);
+      return info;
+    }
+
   }
 }

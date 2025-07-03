@@ -48,12 +48,20 @@ public class ImportrSync
     (int added, int updated, int failed) locationResult = await RegisterLocationAsync();
     _logger.LogInformation($"locations new: {locationResult.added}, updated: {locationResult.updated}, failed : {locationResult.failed}");
     //Register Courses
-
+    var info = await RegisterCoursesAsync(bobe);
+    _logger.LogInformation($"courses new: {info.added}, updated: {info.updated}, failed : {info.failed}");
 
     if (myTimer.ScheduleStatus is not null)
     {
       _logger.LogInformation("Next timer schedule at: {nextSchedule}", myTimer.ScheduleStatus.Next);
     }
+  }
+
+  private async Task<(int added, int updated, int failed)> RegisterCoursesAsync(Models.BOBECourseImport bobe)
+  {
+    var result = await courseService.RegisterCoursesAsync(bobe);
+    var info = (added: result.countAdded, updated: result.countUpdated, failed: result.countFailed);
+    return info;
   }
 
   private async Task<(int added, int updated, int failed)> RegisterLocationAsync()
@@ -71,7 +79,7 @@ public class ImportrSync
             city = "Zellik (Brussels)",
             address = "Z.1. ResearchPark 110",
             courseProviderId = courseProviderId,
-            locationId="U2U",
+            locationId="1",
             countryIsoCode = "BE"
           }
           ]
