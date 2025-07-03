@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportrFunctions.Services
+namespace U2U.External.Services
 {
   class ImportrDelegatingHandler : DelegatingHandler
   {

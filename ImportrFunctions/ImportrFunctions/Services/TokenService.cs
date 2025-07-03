@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ImportrFunctions.Services
+namespace U2U.External.Services
 {
   public class TokenService
   {

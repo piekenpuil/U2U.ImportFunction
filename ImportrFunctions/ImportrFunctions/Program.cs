@@ -1,9 +1,9 @@
-using ImportrFunctions.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using U2U.External.Services;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 

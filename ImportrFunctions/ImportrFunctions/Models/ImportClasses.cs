@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImportrFunctions.Models
+namespace U2U.External.Models
 {
   public class ImportingCourseProviderLocationImportingBundle
   {

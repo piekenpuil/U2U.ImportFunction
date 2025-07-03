@@ -1,11 +1,12 @@
 using System;
 using System.Configuration;
-using ImportrFunctions.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using U2U.External.Models;
+using U2U.External.Services;
 
-namespace ImportrFunctions;
+namespace U2U.External;
 
 public class ImportrSync
 {
@@ -57,7 +58,7 @@ public class ImportrSync
     }
   }
 
-  private async Task<(int added, int updated, int failed)> RegisterCoursesAsync(Models.BOBECourseImport bobe)
+  private async Task<(int added, int updated, int failed)> RegisterCoursesAsync(BOBECourseImport bobe)
   {
     var result = await courseService.RegisterCoursesAsync(bobe);
     var info = (added: result.addedEntities.Length, updated: result.updatedEntities.Length, failed: result.failedEntities.Length);

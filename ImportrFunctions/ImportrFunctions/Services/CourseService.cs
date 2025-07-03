@@ -1,13 +1,13 @@
-﻿using ImportrFunctions.Models;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using U2U.External.Models;
 
-namespace ImportrFunctions.Services
+namespace U2U.External.Services
 {
   public class CourseService
   {
