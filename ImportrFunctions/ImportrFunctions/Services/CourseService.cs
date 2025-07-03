@@ -45,6 +45,8 @@ namespace ImportrFunctions.Services
 
     public async Task<ImportingEntityImportingEntityResult> RegisterCoursesAsync(BOBECourseImport courseInfo)
     {
+      var dryRun = bool.Parse(config["dryRun"]);
+      courseInfo.dryRun = dryRun;
       var sCourses = JsonSerializer.Serialize(courseInfo);
       StringContent body = new StringContent(sCourses, Encoding.UTF8, "application/json");
       var resp = await client.PostAsync(config["CourseImportUrl"], body);

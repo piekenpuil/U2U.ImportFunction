@@ -20,7 +20,7 @@ var importRUrl = builder.Configuration["ImportRURL"];
 
 builder.Services.AddScoped<ImportrDelegatingHandler>();
 builder.Services.AddHttpClient<FetchService>(c => c.BaseAddress = new Uri(bobeUrl));
-builder.Services.AddHttpClient<TokenService>(c => c.BaseAddress = new Uri(bobeUrl));
+builder.Services.AddHttpClient<TokenService>(c => c.BaseAddress = new Uri(importRUrl));
 builder.Services.AddHttpClient<CourseService>(c => c.BaseAddress = new Uri(importRUrl))
   .AddHttpMessageHandler<ImportrDelegatingHandler>();
 
