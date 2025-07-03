@@ -9,11 +9,13 @@ public class ImportrSync
 {
   private readonly ILogger _logger;
   FetchService fetchService;
+  TokenService tokenService;
 
-  public ImportrSync(ILoggerFactory loggerFactory, FetchService fetchService)
+  public ImportrSync(ILoggerFactory loggerFactory, FetchService fetchService, TokenService tokenService)
   {
     _logger = loggerFactory.CreateLogger<ImportrSync>();
     this.fetchService = fetchService;
+    this.tokenService = tokenService;
   }
   //url: /admin/functions/synccourses
   [Function("SyncCourses")]
@@ -34,7 +36,9 @@ public class ImportrSync
       return;
     }
     //GetToken
+    var token = await tokenService.GetTokenAsync();
     //TestCall
+
     //Register Location
     //Register Courses
 
