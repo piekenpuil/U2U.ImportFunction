@@ -60,7 +60,7 @@ public class ImportrSync
   private async Task<(int added, int updated, int failed)> RegisterCoursesAsync(Models.BOBECourseImport bobe)
   {
     var result = await courseService.RegisterCoursesAsync(bobe);
-    var info = (added: result.countAdded, updated: result.countUpdated, failed: result.countFailed);
+    var info = (added: result.addedEntities.Length, updated: result.updatedEntities.Length, failed: result.failedEntities.Length);
     return info;
   }
 
