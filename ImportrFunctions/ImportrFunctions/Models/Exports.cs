@@ -22,7 +22,7 @@ namespace U2U.External.Models
     public string durationUnitId { get; set; }
     public string locationId { get; set; }
     public string levelId { get; set; }
-    public string trainerId { get; set; }
+    //public string trainerId { get; set; }
     public string instructionMethodId { get; set; }
     public string languageId { get; set; }
     public string title { get; set; }
@@ -31,10 +31,10 @@ namespace U2U.External.Models
     public DateTime startTime { get; set; }
     public DateTime endTime { get; set; }
     public int priceExVAT { get; set; }
-    public int priceGroupExVAT { get; set; }
-    public string targetGroups { get; set; }
+    //public int priceGroupExVAT { get; set; }
+    //public string targetGroups { get; set; }
     public string goals { get; set; }
-    public string prerequisites { get; set; }
+    //public string prerequisites { get; set; }
     public int maxParticipants { get; set; }
     public bool certificate { get; set; }
     public string urlToCourseDetails { get; set; }
