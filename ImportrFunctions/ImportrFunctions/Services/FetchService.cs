@@ -43,8 +43,14 @@ namespace U2U.External.Services
 
     private void PatchCourses(BOBECourseImport? bobe)
     {
+      var urls = bobe.entities.Select(b=>b.urlToCourseDetails).Distinct().ToList();
+      //for now...
+      var tokeep = bobe.entities.Where(b => b.providerCourseCategoryId != "305" 
+        && b.providerCourseCategoryId != "312" && b.startTime<DateTime.Now.AddMonths(1)).ToList();
+      bobe.entities = tokeep;
       foreach (var course in bobe.entities)
       {
+        course.urlToCourseDetails = "https://u2u.be/training/Models.Bookings.Core.Entities.Seourl";
         course.maxParticipants = 25;
         if (course.levelId == "None")
         {
@@ -61,6 +67,10 @@ namespace U2U.External.Services
         if (course.goals.Length>512)
         {
           course.goals = course.goals.Substring(0, 512);
+        }
+        if (course.locationId=="online")
+        {
+          course.providerCourseSessionId = string.Concat(course.providerCourseSessionId, "ol");
         }
       }
     }

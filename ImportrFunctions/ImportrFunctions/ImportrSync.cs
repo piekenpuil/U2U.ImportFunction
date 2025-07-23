@@ -61,8 +61,12 @@ public class ImportrSync
   private async Task<(int added, int updated, int failed)> RegisterCoursesAsync(BOBECourseImport bobe)
   {
     var result = await courseService.RegisterCoursesAsync(bobe);
-    var info = (added: result.addedEntities.Length, updated: result.updatedEntities.Length, failed: result.failedEntities.Length);
-    return info;
+    if (result != null)
+    {
+      var info = (added: result.addedEntities.Length, updated: result.updatedEntities.Length, failed: result.failedEntities.Length);
+      return info;
+    }
+    return (0, 0, 0);
   }
 
   private async Task<(int added, int updated, int failed)> RegisterLocationAsync()
